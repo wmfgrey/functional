@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Function Evaluator</title>
+  <!-- Use Pyodide from the CDN -->
   <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
   <style>
     body {
@@ -96,7 +97,7 @@
     </div>
 
     <input type="text" id="expressionInput" placeholder="e.g., double triple succ 3">
-    <button id="evaluateButton">Evaluate</button>
+    <button onclick="evaluate()">Evaluate</button>
     <div id="output"></div>
   </div>
 
@@ -130,7 +131,7 @@ def evaluate_expression(expr):
     for func_name in reversed(functions):
         if func_name not in function_map:
             raise ValueError(f"Unknown function: {func_name}")
-        number = function_mapfunc_name
+        number = function_map[func_name](number)
     return number
 `);
       pyodideReady = true;
@@ -153,9 +154,6 @@ def evaluate_expression(expr):
         outputDiv.innerHTML = `<span class="error">❌ Error: ${err}</span>`;
       }
     }
-
-    document.getElementById("evaluateButton").addEventListener("click", evaluate);
   </script>
 </body>
 </html>
-
