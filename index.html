@@ -141,7 +141,7 @@ def evaluate_expression(expr):
 
     async function evaluate() {
       const outputDiv = document.getElementById("output");
-      const expr = document.getElementById("expressionInput").value;
+      const expr = document.getElementById("expressionInput").value;  // Grab input value
       if (!pyodideReady) {
         outputDiv.innerHTML = "<span class='error'>Pyodide is still loading...</span>";
         return;
