@@ -97,7 +97,8 @@
     </div>
 
     <input type="text" id="expressionInput" placeholder="e.g., double triple succ 3">
-    <button onclick="evaluate()">Evaluate</button>
+    <button onclick="(function() { evaluate(); })()">Evaluate</button>
+
     <div id="output"></div>
   </div>
 
@@ -141,7 +142,18 @@ def evaluate_expression(expr):
 
     async function evaluate() {
       const outputDiv = document.getElementById("output");
-      outputDiv.innerHTML = `Hello`
+      const expr = document.getElementById("expressionInput").value;
+      if (!pyodideReady) {
+        outputDiv.innerHTML = "<span class='error'>Pyodide is still loading...</span>";
+        return;
+      }
+
+      try {
+        const result = await pyodide.runPythonAsync(`evaluate_expression("${expr.replace(/"/g, '\\"')}")`);
+        outputDiv.innerHTML = `✅ Result: ${result}`;
+      } catch (err) {
+        outputDiv.innerHTML = `<span class="error">❌ Error: ${err}</span>`;
+      }
     }
   </script>
 </body>
