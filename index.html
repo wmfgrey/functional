@@ -139,21 +139,27 @@ def evaluate_expression(expr):
 
     loadPyodideAndCode();
 
-    async function evaluate() {
-      const outputDiv = document.getElementById("output");
-      const expr = document.getElementById("expressionInput").value;
-      if (!pyodideReady) {
-        outputDiv.innerHTML = "<span class='error'>Pyodide is still loading...</span>";
-        return;
-      }
+    
+async function evaluate() {
+  const outputDiv = document.getElementById("output");
+  const expr = document.getElementById("expressionInput").value;
+  if (!pyodideReady) {
+    outputDiv.innerHTML = "<span class='error'>Pyodide is still loading...</span>";
+    return;
+  }
 
-      try {
-        const result = await pyodide.runPythonAsync(`evaluate_expression("${expr.replace(/"/g, '\\"')}")`);
-        outputDiv.innerHTML = `✅ Result: ${result}`;
-      } catch (err) {
-        outputDiv.innerHTML = `<span class="error">❌ Error: ${err}</span>`;
-      }
-    }
+  try {
+    const result = await pyodide.runPythonAsync(`evaluate_expression("${expr.replace(/"/g, '\\"')}")`);
+    outputDiv.innerHTML = `✅ Result: ${result}`;
+  } catch (err) {
+    if (err.message.includes("ValueError")) {
+      const errorMessage = err.message.split("ValueError: ")[1];
+      outputDiv.innerHTML = `<span class="error">❌ Error: ${errorMessage}</span>`;
+    } else {
+      outputDiv.innerHTML = `<span class="error">❌ Error: ${err}</span>`;
+    }
+  }
+}
     document.getElementById("evaluateButton").addEventListener("click", evaluate);
   </script>
 </body>
