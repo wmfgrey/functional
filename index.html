@@ -141,18 +141,7 @@ def evaluate_expression(expr):
 
     async function evaluate() {
       const outputDiv = document.getElementById("output");
-      const expr = document.getElementById("expressionInput").value;  // Grab input value
-      if (!pyodideReady) {
-        outputDiv.innerHTML = "<span class='error'>Pyodide is still loading...</span>";
-        return;
-      }
-
-      try {
-        const result = await pyodide.runPythonAsync(`evaluate_expression("${expr.replace(/"/g, '\\"')}")`);
-        outputDiv.innerHTML = `✅ Result: ${result}`;
-      } catch (err) {
-        outputDiv.innerHTML = `<span class="error">❌ Error: ${err}</span>`;
-      }
+      outputDiv.innerHTML = `Hello`
     }
   </script>
 </body>
