@@ -97,7 +97,7 @@
     </div>
 
     <input type="text" id="expressionInput" placeholder="e.g., double triple succ 3">
-    <button onclick="evaluate()">Evaluate</button>
+    <button id="evaluateButton">Evaluate</button>
     <div id="output"></div>
   </div>
 
@@ -154,6 +154,7 @@ def evaluate_expression(expr):
         outputDiv.innerHTML = `<span class="error">❌ Error: ${err}</span>`;
       }
     }
+    document.getElementById("evaluateButton").addEventListener("click", evaluate);
   </script>
 </body>
 </html>
